@@ -2,13 +2,17 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 import string
 import pymysql
+from dotenv import load_dotenv
+import os
 
+# Load environment variables from .env file
+load_dotenv()
 
-# Databasinställningar TODO!!!!
-DB_HOST = "mydb.xxxxxx.region.rds.amazonaws.com" 
-DB_NAME = "your_database_name"
-DB_USER = "your_username"
-DB_PASSWORD = "your_password"
+# Fetch database credentials from environment variables
+DB_HOST = os.getenv("DB_HOST")
+DB_USER = os.getenv("DB_USER")
+DB_PASSWORD = os.getenv("DB_PASSWORD")
+DB_NAME = os.getenv("DB_NAME")
 
 # Funktion för att ansluta till databasen
 def get_db_connection():
@@ -19,8 +23,6 @@ def get_db_connection():
         database=DB_NAME,
         cursorclass=pymysql.cursors.DictCursor
     )
-
-
 
 
 app = Flask(__name__) #Skapa en server
