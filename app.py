@@ -57,8 +57,7 @@ def validate_input(data):
         with conn.cursor() as cursor: #Automatisk stägning av cursorn
             # Kontrollera om strängen redan finns
             cursor.execute("SELECT 1 FROM validated_inputs WHERE input_text = %s", (data,)) #SQL fråga, retunerar 1 om det finns
-            is_duplicate = cursor.fetchone() is not None
-            validations["No duplicates"] = not is_duplicate
+            validations["No duplicates"] = cursor.fetchone() is None
 
             # Om strängen är validerad, spara i databasen
             if all(validations.values()):
